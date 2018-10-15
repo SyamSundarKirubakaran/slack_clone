@@ -55,6 +55,14 @@ class CreateUserActivity : AppCompatActivity() {
                 AuthService.loginUser(this, email,password){loginSuccess ->
                     println(AuthService.authToken)
                     println(AuthService.userEmail)
+                    if(loginSuccess){
+                        AuthService.createUser(this,userName,email,userAvatar,avatarColor){createSuccess ->
+                            if(createSuccess){
+                                Toast.makeText(this,"Creation Success",Toast.LENGTH_LONG).show()
+                                finish()
+                            }
+                        }
+                    }
                 }
             }else{
                 Toast.makeText(this,"Registration Failed",Toast.LENGTH_LONG).show()
