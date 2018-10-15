@@ -1,36 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@color/colorPrimary"
     android:gravity="bottom"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    tools:layout_editor_absoluteY="81dp">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/userImageNavHeader"
+        android:layout_width="76dp"
+        android:layout_height="73dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        app:layout_constraintBottom_toTopOf="@+id/loginButtonNavHeader"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/profiledefault" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/userNameNavHeader"
+        android:layout_width="352dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Syam Sundar K"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toEndOf="@+id/userImageNavHeader"
+        app:layout_constraintTop_toTopOf="@+id/userImageNavHeader" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/userEmailNavHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sample@email.com" />
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:text="sample@email.com"
+        app:layout_constraintStart_toEndOf="@+id/userImageNavHeader"
+        app:layout_constraintTop_toBottomOf="@+id/userNameNavHeader" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/loginButtonNavHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/transparent"
+        android:onClick="loginButtonNavClicked"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/addChannelButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:onClick="addChannelButtonClicked"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/addchannelbutton" />
+
+</android.support.constraint.ConstraintLayout>
