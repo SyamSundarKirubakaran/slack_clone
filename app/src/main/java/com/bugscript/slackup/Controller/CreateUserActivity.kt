@@ -47,9 +47,15 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createCreateUserButtonClicked(view: View){
-        AuthService.regsiterUser(context = this, email = "sam@gmail.com", password = "123456"){  complete ->
-            if(complete){
-                Toast.makeText(this,"Registration Successful",Toast.LENGTH_LONG).show()
+        val userName = createUsernameText.text.toString()
+        val password = createPasswordText.text.toString()
+        val email = createEmailText.text.toString()
+        AuthService.regsiterUser(context = this, email = email, password = password){  registerSuccess ->
+            if(registerSuccess){
+                AuthService.loginUser(this, email,password){loginSuccess ->
+                    println(AuthService.authToken)
+                    println(AuthService.userEmail)
+                }
             }else{
                 Toast.makeText(this,"Registration Failed",Toast.LENGTH_LONG).show()
             }
