@@ -1,9 +1,12 @@
-package com.bugscript.slackup
+package com.bugscript.slackup.Controller
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import com.bugscript.slackup.R
+import com.bugscript.slackup.Services.AuthService
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
@@ -44,6 +47,12 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createCreateUserButtonClicked(view: View){
-        
+        AuthService.regsiterUser(context = this, email = "sam@gmail.com", password = "123456"){  complete ->
+            if(complete){
+                Toast.makeText(this,"Registration Successful",Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(this,"Registration Failed",Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

@@ -1,9 +1,10 @@
-package com.bugscript.slackup
+package com.bugscript.slackup.Controller
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.bugscript.slackup.R
 
 class LoginActivity : AppCompatActivity() {
 
@@ -17,6 +18,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginCreateUserButtonClicked(view : View){
-        startActivity(Intent(this,CreateUserActivity::class.java))
+        startActivity(Intent(this, CreateUserActivity::class.java))
     }
 }
