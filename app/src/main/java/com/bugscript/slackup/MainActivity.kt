@@ -1,5 +1,6 @@
 package com.bugscript.slackup
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loginButtonNavClicked(view : View){
-
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     fun addChannelButtonClicked(view : View){
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendMessageButtonClicked(view: View){
-        
+
     }
 
 }
