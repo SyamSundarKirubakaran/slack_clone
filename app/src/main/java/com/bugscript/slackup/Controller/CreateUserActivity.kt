@@ -55,6 +55,7 @@ class CreateUserActivity : AppCompatActivity() {
         val password = createPasswordText.text.toString()
         val email = createEmailText.text.toString()
 
+        enableSpinner(true)
         if(userName.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty()) {
             AuthService.regsiterUser(context = this, email = email, password = password) { registerSuccess ->
                 if (registerSuccess) {
@@ -64,10 +65,9 @@ class CreateUserActivity : AppCompatActivity() {
                         if (loginSuccess) {
                             AuthService.createUser(this, userName, email, userAvatar, avatarColor) { createSuccess ->
                                 if (createSuccess) {
-
+                                    // Local Broadcast
                                     val userDataChange = Intent(BROADCAST_USER_DATA_CHNAGE)
                                     LocalBroadcastManager.getInstance(this).sendBroadcast(userDataChange)
-
                                     Toast.makeText(this, "Creation Success", Toast.LENGTH_LONG).show()
                                     enableSpinner(false)
                                     finish()

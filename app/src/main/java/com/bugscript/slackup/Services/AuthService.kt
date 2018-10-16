@@ -23,6 +23,7 @@ object AuthService {
 
         val registerRequest = object : StringRequest(Method.POST, URL_REGISTER, Response.Listener {response ->
             println(response)
+            isLoggedIn = true
             complete(true)
         }, Response.ErrorListener {error ->
             Log.d("ERROR","Couln't register user: ${error}")
@@ -80,6 +81,7 @@ object AuthService {
                 UserDataService.avatarColor = response.getString("avatarColor")
                 UserDataService.avatarName = response.getString("avatarName")
                 UserDataService.id = response.getString("_id")
+                isLoggedIn = true
                 complete(true)
             }catch (e : JSONException){
                 Log.d("ERROR","error: ${e.localizedMessage}")
