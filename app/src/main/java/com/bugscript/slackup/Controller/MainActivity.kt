@@ -4,13 +4,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.bugscript.slackup.R
+import com.bugscript.slackup.R.id.drawer_layout
 import com.bugscript.slackup.Services.AuthService
 import com.bugscript.slackup.Services.UserDataService
 import com.bugscript.slackup.Utilities.BROADCAST_USER_DATA_CHNAGE
@@ -36,15 +39,18 @@ class MainActivity : AppCompatActivity() {
 
     private val userDataChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
-            if(AuthService.isLoggedIn){
                 userNameNavHeader.text = UserDataService.name
                 userEmailNavHeader.text = UserDataService.email
                 val resourceID = resources.getIdentifier(UserDataService.avatarName,"drawable",packageName)
                 userImageNavHeader.setImageResource(resourceID)
                 userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginButtonNavHeader.text = "Logout"
-            }
         }
+    }
+
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(userDataChangeReceiver)
+        super.onDestroy()
     }
 
     override fun onBackPressed() {
@@ -56,7 +62,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loginButtonNavClicked(view : View){
-        startActivity(Intent(this, LoginActivity::class.java))
+        if(AuthService.isLoggedIn){
+            UserDataService.logout()
+            userNameNavHeader.text = "Name"
+            userEmailNavHeader.text = "Email"
+            userImageNavHeader.setImageResource(R.drawable.profiledefault)
+            userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
+            loginButtonNavHeader.text = "LOGIN"
+        } else {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
 
     fun addChannelButtonClicked(view : View){

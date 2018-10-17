@@ -16,7 +16,7 @@ import java.util.*
 class CreateUserActivity : AppCompatActivity() {
 
     var userAvatar = "profileDefault"
-    var avatarColor = "[0.5,0.5,0.5,1]"
+    var avatarColor = "[0.5, 0.5, 0.5, 1]"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ class CreateUserActivity : AppCompatActivity() {
         val savedR = red.toDouble()/255
         val savedG = green.toDouble()/255
         val savedB = blue.toDouble()/255
-        avatarColor = "[$savedR,$savedG,$savedB,1]"
+        avatarColor = "[$savedR, $savedG, $savedB, 1]"
     }
 
     fun createCreateUserButtonClicked(view: View){
@@ -65,9 +65,11 @@ class CreateUserActivity : AppCompatActivity() {
                         if (loginSuccess) {
                             AuthService.createUser(this, userName, email, userAvatar, avatarColor) { createSuccess ->
                                 if (createSuccess) {
+
                                     // Local Broadcast
                                     val userDataChange = Intent(BROADCAST_USER_DATA_CHNAGE)
                                     LocalBroadcastManager.getInstance(this).sendBroadcast(userDataChange)
+
                                     Toast.makeText(this, "Creation Success", Toast.LENGTH_LONG).show()
                                     enableSpinner(false)
                                     finish()

@@ -29,7 +29,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Syam Sundar K"
+        android:text="Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toEndOf="@+id/userImageNavHeader"
         app:layout_constraintTop_toTopOf="@+id/userImageNavHeader" />
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
-        android:text="sample@email.com"
+        android:text="Email"
         app:layout_constraintStart_toEndOf="@+id/userImageNavHeader"
         app:layout_constraintTop_toBottomOf="@+id/userNameNavHeader" />
 

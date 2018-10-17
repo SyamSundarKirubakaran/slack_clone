@@ -11,6 +11,17 @@ object UserDataService {
     var email = ""
     var name = ""
 
+    fun logout(){
+        id = ""
+        avatarName = ""
+        avatarColor = ""
+        email = ""
+        name = ""
+        AuthService.isLoggedIn = false
+        AuthService.authToken = ""
+        AuthService.userEmail = ""
+    }
+
     fun returnAvatarColor(components : String): Int{
         // [0.5,0.5,0.5,1]
         // 0.5 0.5 0.5 1

@@ -19,5 +19,6 @@ class LoginActivity : AppCompatActivity() {
 
     fun loginCreateUserButtonClicked(view : View){
         startActivity(Intent(this, CreateUserActivity::class.java))
+        finish()
     }
 }
