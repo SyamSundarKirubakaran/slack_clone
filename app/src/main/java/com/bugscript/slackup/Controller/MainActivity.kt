@@ -55,6 +55,10 @@ class MainActivity : AppCompatActivity() {
 
         setupAdapter()
 
+        if(App.prefs.isLoggedIn){
+            AuthService.findUserByEmail(this){}
+        }
+
     }
 
     override fun onResume() {
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     private val userDataChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context, p1: Intent?) {
-            if (AuthService.isLoggedIn) {
+            if (App.prefs.isLoggedIn) {
                 userNameNavHeader.text = UserDataService.name
                 userEmailNavHeader.text = UserDataService.email
                 val resourceID = resources.getIdentifier(UserDataService.avatarName, "drawable", packageName)
@@ -96,20 +100,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loginButtonNavClicked(view : View){
-        if(AuthService.isLoggedIn){
+        if(App.prefs.isLoggedIn){
             UserDataService.logout()
             userNameNavHeader.text = "Name"
             userEmailNavHeader.text = "Email"
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
             loginButtonNavHeader.text = "LOGIN"
+            MessageService.channels.clear()
         } else {
             startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 
     fun addChannelButtonClicked(view : View){
-        if(AuthService.isLoggedIn) {
+        if(App.prefs.isLoggedIn) {
             var builder = AlertDialog.Builder(this)
             var dialogueView = layoutInflater.inflate(R.layout.add_channel_dialogue, null)
             builder.setView(dialogueView)

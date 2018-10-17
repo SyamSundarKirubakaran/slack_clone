@@ -1,6 +1,7 @@
 package com.bugscript.slackup.Services
 
 import android.graphics.Color
+import com.bugscript.slackup.Controller.App
 import java.util.*
 
 object UserDataService {
@@ -17,9 +18,9 @@ object UserDataService {
         avatarColor = ""
         email = ""
         name = ""
-        AuthService.isLoggedIn = false
-        AuthService.authToken = ""
-        AuthService.userEmail = ""
+        App.prefs.isLoggedIn = false
+        App.prefs.authToken = ""
+        App.prefs.userEmail = ""
     }
 
     fun returnAvatarColor(components : String): Int{
