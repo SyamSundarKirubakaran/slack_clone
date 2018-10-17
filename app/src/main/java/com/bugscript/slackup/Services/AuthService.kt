@@ -19,7 +19,7 @@ object AuthService {
 //    var userEmail = ""
 //    var authToken = ""
 
-    fun regsiterUser(context: Context, email:String, password:String,complete: (Boolean) -> Unit){
+    fun regsiterUser(email:String, password:String,complete: (Boolean) -> Unit){
         val requestBody = buildupJSONObject(email,password)
 
         val registerRequest = object : StringRequest(Method.POST, URL_REGISTER, Response.Listener {response ->
@@ -42,7 +42,7 @@ object AuthService {
         App.prefs.requestQueue.add(registerRequest)
     }
 
-    fun loginUser(context: Context, email: String, password: String,complete: (Boolean) -> Unit){
+    fun loginUser(email: String, password: String,complete: (Boolean) -> Unit){
         val requestBody = buildupJSONObject(email,password)
 
         val loginRequest = object : JsonObjectRequest(Method.POST, URL_LOGIN, null, Response.Listener{ response ->
@@ -72,7 +72,7 @@ object AuthService {
     }
 
 
-    fun createUser(context: Context, name: String, email: String, avatarName: String, avatarColor : String, complete: (Boolean) -> Unit){
+    fun createUser(name: String, email: String, avatarName: String, avatarColor : String, complete: (Boolean) -> Unit){
         val requestBody = buildUpJSONCreateUser(name,email,avatarName,avatarColor)
 
         val createRequest = object : JsonObjectRequest(Method.POST, URL_CREATE_USER, null, Response.Listener {  response ->

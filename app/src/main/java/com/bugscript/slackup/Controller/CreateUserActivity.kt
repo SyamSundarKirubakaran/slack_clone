@@ -57,11 +57,11 @@ class CreateUserActivity : AppCompatActivity() {
 
         enableSpinner(true)
         if(userName.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty()) {
-            AuthService.regsiterUser(context = this, email = email, password = password) { registerSuccess ->
+            AuthService.regsiterUser(email = email, password = password) { registerSuccess ->
                 if (registerSuccess) {
-                    AuthService.loginUser(this, email, password) { loginSuccess ->
+                    AuthService.loginUser(email, password) { loginSuccess ->
                         if (loginSuccess) {
-                            AuthService.createUser(this, userName, email, userAvatar, avatarColor) { createSuccess ->
+                            AuthService.createUser(userName, email, userAvatar, avatarColor) { createSuccess ->
                                 if (createSuccess) {
 
                                     // Local Broadcast

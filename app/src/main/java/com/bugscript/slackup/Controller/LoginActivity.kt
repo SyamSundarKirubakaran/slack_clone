@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         val password = loginPasswordText.text.toString()
         hideKeyBoard()
         if (email.isNotEmpty() && password.isNotEmpty()){
-            AuthService.loginUser(this,email = email,password = password){ loginSuccess ->
+            AuthService.loginUser(email = email,password = password){ loginSuccess ->
                 if(loginSuccess){
                     AuthService.findUserByEmail(context = this){userFound ->
                         if(userFound){
