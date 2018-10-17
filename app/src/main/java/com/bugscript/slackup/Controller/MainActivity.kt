@@ -15,17 +15,23 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.bugscript.slackup.Model.Channel
 import com.bugscript.slackup.R
 import com.bugscript.slackup.R.id.drawer_layout
 import com.bugscript.slackup.Services.AuthService
+import com.bugscript.slackup.Services.MessageService
 import com.bugscript.slackup.Services.UserDataService
 import com.bugscript.slackup.Utilities.BROADCAST_USER_DATA_CHNAGE
+import com.bugscript.slackup.Utilities.SOCKET_URL
+import io.socket.client.IO
+import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : AppCompatActivity() {
+
+    val socket = IO.socket(SOCKET_URL)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +43,20 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(BROADCAST_USER_DATA_CHNAGE))
+        socket.connect()
+        socket.on("channelCreated",onNewChannel)
 
+    }
+
+    override fun onResume() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(BROADCAST_USER_DATA_CHNAGE))
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(userDataChangeReceiver)
+        socket.disconnect()
+        super.onDestroy()
     }
 
     private val userDataChangeReceiver = object : BroadcastReceiver() {
@@ -50,11 +68,6 @@ class MainActivity : AppCompatActivity() {
                 userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginButtonNavHeader.text = "Logout"
         }
-    }
-
-    override fun onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(userDataChangeReceiver)
-        super.onDestroy()
     }
 
     override fun onBackPressed() {
@@ -89,12 +102,27 @@ class MainActivity : AppCompatActivity() {
                         val channelname = nameTextField.text.toString()
                         val channelDesc = descTextField.text.toString()
 
+                        socket.emit("newChannel", channelname,channelDesc)
 
                     }
                     .setNegativeButton("Cancel"){ dialogInterface, i ->
 
                     }
                     .show()
+        }
+    }
+
+    private val onNewChannel = Emitter.Listener { args ->
+        runOnUiThread {
+            val channelName = args[0] as String
+            val channelDesc = args[1] as String
+            val channelID = args[2] as String
+
+            val newChannel = Channel(channelName,channelDesc,channelID)
+            MessageService.channels.add(newChannel)
+            println(newChannel.name)
+            println(newChannel.description)
+            println(newChannel.id)
         }
     }
 
