@@ -10,8 +10,11 @@ import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import com.bugscript.slackup.R
 import com.bugscript.slackup.R.id.drawer_layout
 import com.bugscript.slackup.Services.AuthService
@@ -21,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +79,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addChannelButtonClicked(view : View){
+        if(AuthService.isLoggedIn) {
+            var builder = AlertDialog.Builder(this)
+            var dialogueView = layoutInflater.inflate(R.layout.add_channel_dialogue, null)
+            builder.setView(dialogueView)
+                    .setPositiveButton("Add"){ dialogInterface, i ->
+                        val nameTextField = dialogueView.findViewById<EditText>(R.id.addChannelNameText)
+                        val descTextField = dialogueView.findViewById<EditText>(R.id.addChannelDescText)
+                        val channelname = nameTextField.text.toString()
+                        val channelDesc = descTextField.text.toString()
 
+
+                    }
+                    .setNegativeButton("Cancel"){ dialogInterface, i ->
+
+                    }
+                    .show()
+        }
     }
 
     fun sendMessageButtonClicked(view: View){
